@@ -1,0 +1,90 @@
+# Elasticsearch requires your vm.max_map_count set to 262144
+# run the below command on your host before issue docker-compose up
+# sysctl -w vm.max_map_count=262144
+# to make it permanent add vm.max_map_count=262144 to /etc/sysctl.conf
+
+version: '3.7'
+services:
+##### FLUENTD ######
+  fluentd:
+    build: ./fluentd
+    container_name: fluentd
+    volumes:
+      - ./fluentd/conf:/fluentd/etc
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    networks:
+      - elastic
+##### ELASTIC SEARCH #####
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - node.name=elasticsearch
+      - network.host=0.0.0.0
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.type=PKCS12
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.keystore.path=elastic-certificates.p12
+      - xpack.security.transport.ssl.truststore.path=elastic-certificates.p12
+      - xpack.security.transport.ssl.truststore.type=PKCS12
+#      - xpack.security.authc.api_key.enabled="true"
+      #- "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
+      #- "LS_JAVA_OPTS=-Xmx3g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticvol1:/usr/share/elasticsearch/data
+      - ./elastic-certificates.p12:/usr/share/elasticsearch/config/elastic-certificates.p12
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elastic
+
+##### APM ######
+  apm:
+    build: ./apm
+    container_name: apm
+    ports:
+      - "8200:8200"
+    depends_on:
+      - kibana
+    networks:
+      - elastic
+
+#### KIBANA #####
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.1
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+#      xpack.ingestManager.enabled: "true"
+#      xpack.ingestManager.fleet.tlsCheckDisabled: "true" 
+#      xpack.security.enabled: "true"
+#      elasticsearch.username: "elastic" 
+#      elasticsearch.password: "abc123iUnbRftkABC123"
+
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic
+
+volumes:
+  elasticvol1:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge
