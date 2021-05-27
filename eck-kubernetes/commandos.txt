@@ -1,5 +1,18 @@
+####
+first: https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-deploy-eck.html
+second: https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-deploy-elasticsearch.html
+third: https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-deploy-kibana.html
+four: https://www.elastic.co/guide/en/cloud-on-k8s/1.0/k8s-apm-server.html
+five: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-beat-quickstart.html
+https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-beat-configuration-examples.html
 
 
+
+
+https://medium.com/nerd-for-tech/monitoring-kubernetes-cluster-using-elastic-stack-elasticsearch-kibana-metricbeat-ecbe586a3e7c
+
+
+############
 https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-deploy-eck.html
 
 https://www.elastic.co/what-is/kubernetes-monitoring
@@ -11,3 +24,5 @@ https://www.elastic.co/guide/en/beats/metricbeat/7.8/load-kibana-dashboards.html
 ### Elastic Cloud on Kubernetes
 https://www.youtube.com/watch?v=qjnT0pU0IRo
 https://www.youtube.com/watch?v=fNMmnN8gLCw
+
+
