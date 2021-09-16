@@ -1,11 +1,11 @@
 ### Deploying StorageClass  ## https://github.com/rancher/local-path-provisioner
 `wget https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml`  
-edit `local-patch-storage.yaml` and change "/opt/local-path-provisioner" to your NFS mount point, then apply
+edit `local-patch-storage.yaml` and change "/opt/local-path-provisioner" to your NFS mount point, then apply.  
 `kubectl apply -f local-path-storage.yaml`  
 
 ### Deploying Metric Server ## https://github.com/kubernetes-sigs/metrics-server  
-'kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yamlæ  
-to test run; 'kubectl top node' or 'kubectl top pod'
+`kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml`  
+to test run; `kubectl top node` or `kubectl top pod`
 
 ##### documentation https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-orchestrating-elastic-stack-applications.html
 
