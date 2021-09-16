@@ -28,6 +28,6 @@ kubectl port-forward service/quickstart-kb-http --address 0.0.0.0 5601
 #### Deploying Ingress  
 
 with `<cert>.key` and `<cert>.crt` in place, run:  
-`chmod +x create-tls-secret.sh`
+`chmod +x create-tls-secret.sh`  
 `./create-tls-secret.sh <namespace>` *(namespace where you want to create the secret with TLS)*  
 
